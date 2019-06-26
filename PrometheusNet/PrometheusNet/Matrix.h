@@ -16,6 +16,9 @@ public:
 	//0 for rows, 1 for columns
 	unsigned getRowsorColumns(bool COLUMNS) { return COLUMNS ? columns : rows; }
 
+	//M E T R O I D
+	Matrix* operator*(const Matrix& otherM);
+
 private:
 	unsigned rows;
 	unsigned columns;;
