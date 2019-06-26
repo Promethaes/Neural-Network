@@ -7,29 +7,29 @@ Layer::Layer(unsigned SIZE)
 	size = SIZE;
 }
 
-Matrix * Layer::toMatrixValue()
+Matrix Layer::toMatrixValue()
 {
-	Matrix* m = new Matrix(1, neurons.size(), false);
+	Matrix m = Matrix(1, neurons.size(), false);
 	for (int i = 0; i < neurons.size(); i++)
-		m->setValue(0, i, neurons[i]->getValue());
+		m.setValue(0, i, neurons[i]->getValue());
 
 	return m;
 }
 
-Matrix * Layer::toMatrixActivatedValue()
+Matrix Layer::toMatrixActivatedValue()
 {
-	Matrix* m = new Matrix(1, neurons.size(), false);
+	Matrix m = Matrix(1, neurons.size(), false);
 	for (int i = 0; i < neurons.size(); i++)
-		m->setValue(0, i, neurons[i]->getActivatedValue());
+		m.setValue(0, i, neurons[i]->getActivatedValue());
 
 	return m;
 }
 
-Matrix * Layer::toMatrixDerivedValue()
+Matrix Layer::toMatrixDerivedValue()
 {
-	Matrix* m = new Matrix(1, neurons.size(), false);
-	for (int i = 0; i < neurons.size(); i++) 
-		m->setValue(0, i, neurons[i]->getDerivedValue());
+	Matrix m = Matrix(1, neurons.size(), false);
+	for (int i = 0; i < neurons.size(); i++)
+		m.setValue(0, i, neurons[i]->getDerivedValue());
 	
 	return m;
 }

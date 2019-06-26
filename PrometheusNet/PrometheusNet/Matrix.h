@@ -6,7 +6,7 @@ class Matrix {
 public:
 	Matrix(unsigned ROWS, unsigned COLUMNS, bool isRandom = true);
 
-	Matrix* transpose();
+	Matrix transpose();
 
 	float genRandomNumber();
 	void print();
@@ -17,10 +17,10 @@ public:
 	unsigned getRowsorColumns(bool COLUMNS) { return COLUMNS ? columns : rows; }
 
 	//M E T R O I D
-	Matrix* operator*(const Matrix& otherM);
+	Matrix operator*(const Matrix& otherM);
 
 private:
 	unsigned rows;
-	unsigned columns;;
+	unsigned columns;
 	std::vector<std::vector<float>>values;
 };

@@ -8,9 +8,9 @@ public:
 
 	Layer(unsigned SIZE);
 	void setValue(unsigned i, float v) { neurons[i]->setValue(v); }
-	Matrix* toMatrixValue();
-	Matrix* toMatrixActivatedValue();
-	Matrix* toMatrixDerivedValue();
+	Matrix toMatrixValue();
+	Matrix toMatrixActivatedValue();
+	Matrix toMatrixDerivedValue();
 
 private:
 

@@ -14,25 +14,25 @@ int main() {
  	//Matrix* mT = m->transpose();
 	//mT->print();
 	
-	//std::vector<int>topology;
-	//topology.push_back(3);
-	//topology.push_back(2);
-	//topology.push_back(3);
-	//
-	//std::vector<float> input;
-	//input.push_back(1.0f);
-	//input.push_back(0.0f);
-	//input.push_back(1.0f);
-	//
-	//NeuralNetwork* network = new NeuralNetwork(topology);
-	//network->setCurrentInput(input);
-	//
-	//network->print();
+	std::vector<int>topology;
+	topology.push_back(3);
+	topology.push_back(2);
+	topology.push_back(3);
+	
+	std::vector<float> input;
+	input.push_back(1.0f);
+	input.push_back(0.0f);
+	input.push_back(1.0f);
+	
+	NeuralNetwork network = NeuralNetwork(topology);
+	network.setCurrentInput(input);
+		   
+	network.print();
 
-	Matrix* m1 = new Matrix(3, 2, yes);
-	Matrix* m2 = new Matrix(2, 3, yes);
-
-	auto m3 = *m1 * *m2;
+	//Matrix m1(3, 2, yes);
+	//Matrix m2(2, 3, yes);
+	//
+	//auto m3 = m1 * m2;
 
 	system("pause");
 	return 0;

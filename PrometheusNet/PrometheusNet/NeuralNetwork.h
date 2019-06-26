@@ -10,7 +10,7 @@ public:
 private:
 	std::vector<int> topology;
 	std::vector<float> input;
-	std::vector<Layer*>layers;
-	std::vector<Matrix*> weightMatrices;
+	std::vector<Layer>layers;
+	std::vector<Matrix> weightMatrices;
 
 };
