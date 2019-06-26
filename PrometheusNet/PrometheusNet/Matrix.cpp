@@ -53,19 +53,22 @@ void Matrix::setValue(unsigned row, unsigned columnm, float v)
 	values[row][columnm] = v;
 }
 
-Matrix  Matrix::operator*(const Matrix & otherM)
+Matrix * Matrix::operator*(const Matrix & otherM)
 {
-	Matrix tempMatrix =  Matrix(this->rows, otherM.columns, false);
+	if (columns != otherM.rows)
+		exit(0);
+
+	Matrix* tempMatrix =  new Matrix(this->rows, otherM.columns, false);
 
 	for (int i = 0; i < this->rows; i++) {
 		for (int j = 0; j < otherM.columns; j++) {
 			for (int k = 0; k < otherM.rows; k++) {
-				double p = this->getValue(i, k) * otherM.getValue(k, j);
-				double newVal = tempMatrix.getValue(i, j) + p;
-				tempMatrix.setValue(i, j, newVal);
+				float p = this->getValue(i, k) * otherM.getValue(k, j);
+				float newVal = tempMatrix->getValue(i, j) + p;
+				tempMatrix->setValue(i, j, newVal);
 			}
 
-			tempMatrix.setValue(i, j, tempMatrix.getValue(i, j));
+			tempMatrix->setValue(i, j, tempMatrix->getValue(i, j));
 		}
 	}
 	return tempMatrix;

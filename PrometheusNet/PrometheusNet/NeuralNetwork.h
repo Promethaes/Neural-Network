@@ -4,13 +4,15 @@
 #include "Layer.h"
 class NeuralNetwork {
 public:
-	NeuralNetwork(std::vector<int> TOPOLOGY);
-	void setCurrentInput(std::vector<float> input);
+	NeuralNetwork(const std::vector<int>& TOPOLOGY);
+	void setCurrentInput(const std::vector<float>& input);
+	void setNeuronValue(int indexLayer, int indexNeutron, float v);
 	void print();
+	void feedForward();
 private:
 	std::vector<int> topology;
 	std::vector<float> input;
-	std::vector<Layer>layers;
-	std::vector<Matrix> weightMatrices;
+	std::vector<Layer*>layers;
+	std::vector<Matrix*> weightMatrices;
 
 };

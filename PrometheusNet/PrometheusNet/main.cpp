@@ -17,7 +17,7 @@ int main() {
 	std::vector<int>topology;
 	topology.push_back(3);
 	topology.push_back(2);
-	topology.push_back(3);
+	topology.push_back(1);
 	
 	std::vector<float> input;
 	input.push_back(1.0f);
@@ -26,13 +26,12 @@ int main() {
 	
 	NeuralNetwork network = NeuralNetwork(topology);
 	network.setCurrentInput(input);
+	network.feedForward();
 		   
 	network.print();
 
-	//Matrix m1(3, 2, yes);
-	//Matrix m2(2, 3, yes);
-	//
-	//auto m3 = m1 * m2;
+	
+	
 
 	system("pause");
 	return 0;

@@ -17,10 +17,10 @@ public:
 	unsigned getRowsorColumns(bool COLUMNS) { return COLUMNS ? columns : rows; }
 
 	//M E T R O I D
-	Matrix operator*(const Matrix& otherM);
+	Matrix* operator*(const Matrix& otherM);
 
-private:
 	unsigned rows;
 	unsigned columns;
+private:
 	std::vector<std::vector<float>>values;
 };
