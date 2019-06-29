@@ -24,25 +24,22 @@ int main() {
 	input.push_back(0.0f);
 	input.push_back(1.0f);
 
-	bool run = yes;
-	while (run) {
 
-		NeuralNetwork network = NeuralNetwork(topology);
-		network.setCurrentInput(input);
-		network.setCurrentTarget(input);
-		network.feedForward();
-		network.setErrors();
 
-		network.print();
 
-		std::cout << "\n\nTotal Error: " << network.getTotalError() << "\n";
-		std::cout << "\n\nEnter one to go again. Enter zero to exit\n";
-		std::cin >> run;
+	NeuralNetwork network = NeuralNetwork(topology);
+	network.setCurrentInput(input);
+	network.setCurrentTarget(input);
+	network.feedForward();
+	network.setErrors();
 
-		system("cls");
+	network.print();
 
-	}
+	std::cout << "\n\nTotal Error: " << network.getTotalError() << "\n";
 
-	//system("pause");
+
+
+
+	system("pause");
 	return 0;
 }
