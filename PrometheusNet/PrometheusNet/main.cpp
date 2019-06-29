@@ -11,28 +11,38 @@ int main() {
 	//Matrix* m = new Matrix(3, 2, yes);
 	//m->print();
 	//
- 	//Matrix* mT = m->transpose();
+	//Matrix* mT = m->transpose();
 	//mT->print();
-	
+
 	std::vector<int>topology;
 	topology.push_back(3);
 	topology.push_back(2);
-	topology.push_back(1);
-	
+	topology.push_back(3);
+
 	std::vector<float> input;
 	input.push_back(1.0f);
 	input.push_back(0.0f);
 	input.push_back(1.0f);
-	
-	NeuralNetwork network = NeuralNetwork(topology);
-	network.setCurrentInput(input);
-	network.feedForward();
-		   
-	network.print();
 
-	
-	
+	bool run = yes;
+	while (run) {
 
-	system("pause");
+		NeuralNetwork network = NeuralNetwork(topology);
+		network.setCurrentInput(input);
+		network.setCurrentTarget(input);
+		network.feedForward();
+		network.setErrors();
+
+		network.print();
+
+		std::cout << "\n\nTotal Error: " << network.getTotalError() << "\n";
+		std::cout << "\n\nEnter one to go again. Enter zero to exit\n";
+		std::cin >> run;
+
+		system("cls");
+
+	}
+
+	//system("pause");
 	return 0;
 }

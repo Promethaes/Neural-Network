@@ -3,11 +3,14 @@
 NeuralNetwork::NeuralNetwork(const std::vector<int>& TOPOLOGY)
 {
 	topology = TOPOLOGY;
-	for (int i = 0; i < TOPOLOGY.size(); i++) 
+	for (int i = 0; i < TOPOLOGY.size(); i++) {
 		layers.push_back(new Layer(TOPOLOGY[i]));
+		errors.push_back(0);
+	}
 
 	for (int i = 0; i < TOPOLOGY.size() - 1; i++)
-		weightMatrices.push_back(new Matrix(TOPOLOGY[i],TOPOLOGY[i + 1],yes));
+		weightMatrices.push_back(new Matrix(TOPOLOGY[i], TOPOLOGY[i + 1], yes));
+
 }
 
 void NeuralNetwork::setCurrentInput(const std::vector<float>& input)
@@ -48,7 +51,7 @@ void NeuralNetwork::feedForward()
 		auto m1 = layers[i]->toMatrixValue();
 		if (i > 0)
 			m1 = layers[i]->toMatrixActivatedValue();
-		
+
 		auto m2 = weightMatrices[i];
 		auto m3 = *m1 * *m2;
 
@@ -60,4 +63,21 @@ void NeuralNetwork::feedForward()
 
 
 	}
+}
+
+void NeuralNetwork::setErrors()
+{
+	if (target.empty())
+		exit(0);
+	if (target.size() != layers.back()->getNeurons().size())
+		exit(0);
+	error = 0.00f;
+
+	std::vector<Neuron*> outputNeurons = layers.back()->getNeurons();
+	for (int i = 0; i < target.size(); i++) {
+		float tempError = outputNeurons[i]->getActivatedValue() - target[i];
+		errors[i] = tempError;
+		error += tempError;
+	}
+	historicalErrors.push_back(error); 
 }
