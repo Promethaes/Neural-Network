@@ -37,6 +37,7 @@ int main() {
 
 	std::cout << "\n\nTotal Error: " << network.getTotalError() << "\n";
 
+	network.backPropagation();
 
 
 

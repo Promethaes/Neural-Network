@@ -24,7 +24,7 @@ Matrix  Matrix::transpose()
 
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++)
-			m.setValue(j, i,getValue(i,j));
+			m.setValue(j, i, getValue(i, j));
 		std::cout << "\n";
 	}
 
@@ -58,7 +58,7 @@ Matrix * Matrix::operator*(const Matrix & otherM)
 	if (columns != otherM.rows)
 		exit(0);
 
-	Matrix* tempMatrix =  new Matrix(this->rows, otherM.columns, false);
+	Matrix* tempMatrix = new Matrix(this->rows, otherM.columns, false);
 
 	for (int i = 0; i < this->rows; i++) {
 		for (int j = 0; j < otherM.columns; j++) {
@@ -74,12 +74,30 @@ Matrix * Matrix::operator*(const Matrix & otherM)
 	return tempMatrix;
 }
 
+Matrix Matrix::operator-(const Matrix & otherM)
+{
+	if (rows != otherM.rows || columns != otherM.columns) {
+		system("cls");
+		std::cout << rows << " " << columns << "\nOtherM " << otherM.rows << " " << otherM.columns << "\n\n";
+	}
+
+	Matrix tempMatrix(rows, columns, false);
+
+	for (int i = 0; i < rows; i++)
+		for (int j = 0; j < columns; j++)
+			tempMatrix.setValue(i, j, (getValue(i, j) - otherM.getValue(i, j)));
+
+
+
+	return tempMatrix;
+}
+
 Matrix Matrix::operator*=(const Matrix & otherM)
 {
 	if (columns != otherM.rows)
 		exit(0);
 
-	Matrix tempMatrix =  Matrix(this->rows, otherM.columns, false);
+	Matrix tempMatrix = Matrix(this->rows, otherM.columns, false);
 
 	for (int i = 0; i < this->rows; i++) {
 		for (int j = 0; j < otherM.columns; j++) {

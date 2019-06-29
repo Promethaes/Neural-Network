@@ -62,10 +62,6 @@ void NeuralNetwork::feedForward()
 		//	std::cout << q << "\n";
 		for (int j = 0; j < m3->columns; j++)
 			setNeuronValue(i + 1, j, m3->getValue(0, j));
-
-		delete m1;
-		delete m2;
-		delete m3;
 	}
 }
 
@@ -90,17 +86,26 @@ void NeuralNetwork::backPropagation()
 {
 	//output layer to hidden layer
 	auto derivedValuesYtoZ = *layers.back()->toMatrixDerivedValue();
-	auto gradientsYtoZ = Matrix(1, layers.back()->getNeurons().size(), no);
+ 	auto gradientsYtoZ = Matrix(1, layers.back()->getNeurons().size(), no);
 
-	for (int i = 0; errors.size(); i++)
+	for (int i = 0; i < errors.size(); i++)
 		gradientsYtoZ.setValue(0, i, derivedValuesYtoZ.getValue(0, i)*errors[i]);
 
 	unsigned lastHiddenLayerIndex = layers.size() - 2;
 	Layer lastHiddenlayer = *layers[lastHiddenLayerIndex];
+	
+	//create and transpose a matrix
 	Matrix deltaOutputToHidden = gradientsYtoZ.transpose() *= *lastHiddenlayer.toMatrixActivatedValue();
+	deltaOutputToHidden = deltaOutputToHidden.transpose();
 
+
+	std::vector<Matrix> newWeights;
+	newWeights.push_back((*weightMatrices[lastHiddenLayerIndex] - deltaOutputToHidden).transpose());
+
+	std::cout << "Output to Hiden New Weights\n";
+	newWeights.back().print();
 
 
 	//from last hidden layer down to hidden layer
-//	for (int i = layers.size() - 2; i >= 0; i--)
+	//for (int i = layers.size() - 2; i >= 0; i--)
 }
