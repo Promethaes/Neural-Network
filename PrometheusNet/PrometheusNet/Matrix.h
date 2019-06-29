@@ -19,6 +19,9 @@ public:
 	//M E T R O I D
 	Matrix* operator*(const Matrix& otherM);
 
+	//MULTIPLICATION FOR NON POINTERS (i know it sucks)
+	Matrix operator*=(const Matrix& otherM);
+
 	unsigned rows;
 	unsigned columns;
 private:

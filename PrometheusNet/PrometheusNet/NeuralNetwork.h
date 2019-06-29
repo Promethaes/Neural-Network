@@ -11,6 +11,7 @@ public:
 	void print();
 	void feedForward();
 	void setErrors();
+	void backPropagation();
 
 	float getTotalError() const { return error; }
 private:
@@ -18,6 +19,7 @@ private:
 	std::vector<float> input;
 	std::vector<Layer*>layers;
 	std::vector<Matrix*> weightMatrices;
+	std::vector<Matrix*> gradientMatrices; 
 	float error;
 	std::vector<float> errors;
 	std::vector<float> historicalErrors;
