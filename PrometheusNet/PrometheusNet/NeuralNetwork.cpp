@@ -86,14 +86,14 @@ void NeuralNetwork::backPropagation()
 {
 	//output layer to hidden layer
 	auto derivedValuesYtoZ = *layers.back()->toMatrixDerivedValue();
- 	auto gradientsYtoZ = Matrix(1, layers.back()->getNeurons().size(), no);
+	auto gradientsYtoZ = Matrix(1, layers.back()->getNeurons().size(), no);
 
 	for (int i = 0; i < errors.size(); i++)
 		gradientsYtoZ.setValue(0, i, derivedValuesYtoZ.getValue(0, i)*errors[i]);
 
 	unsigned lastHiddenLayerIndex = layers.size() - 2;
 	Layer lastHiddenlayer = *layers[lastHiddenLayerIndex];
-	
+
 	//create and transpose a matrix
 	Matrix deltaOutputToHidden = gradientsYtoZ.transpose() *= *lastHiddenlayer.toMatrixActivatedValue();
 	deltaOutputToHidden = deltaOutputToHidden.transpose();
@@ -101,11 +101,37 @@ void NeuralNetwork::backPropagation()
 
 	std::vector<Matrix> newWeights;
 	newWeights.push_back((*weightMatrices[lastHiddenLayerIndex] - deltaOutputToHidden).transpose());
+	auto gradient = gradientsYtoZ;
 
 	std::cout << "Output to Hiden New Weights\n";
 	newWeights.back().print();
 
+	//-----------------------------------------//
+	//-----------------------------------------//
+	//-----------------------------------------//
+	//-----------------------------------------//
+	//-----------------------------------------//
+	//-----------------------------------------//
+	//-----------------------------------------//
+
+
 
 	//from last hidden layer down to hidden layer
-	//for (int i = layers.size() - 2; i >= 0; i--)
+	for (int i = layers.size() - 2; i > 0; i--) {
+		auto derivedGradients = Matrix(1, layers[i]->getNeurons().size(), false);
+
+		for (int j = 0; j < weightMatrices[i]->getRowsorColumns(0); j++) {
+			float sum = 0;
+			for (int k = 0; k < weightMatrices[i]->getRowsorColumns(1); k++) {
+				auto p = gradient.getValue(j, k) * weightMatrices[i]->getValue(j, k);
+				sum += p;
+			}
+			derivedGradients.setValue(0, j, sum*layers[i]->toMatrixActivatedValue()->getValue(0, j));
+		}
+		auto leftNeurons = (i - 1) ? *layers[0]->toMatrixValue() : *layers[i - 1]->toMatrixActivatedValue();
+
+		newWeights.push_back(*weightMatrices[i - 1] - *(derivedGradients.transpose()*leftNeurons));
+		
+		gradient = derivedGradients;
+	}
 }
