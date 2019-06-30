@@ -1,5 +1,5 @@
 #include "NeuralNetwork.h"
-
+#include <algorithm>
 NeuralNetwork::NeuralNetwork(const std::vector<int>& TOPOLOGY)
 {
 	topology = TOPOLOGY;
@@ -31,12 +31,10 @@ void NeuralNetwork::print()
 		if (not i) {
 			Matrix* m = layers[i]->toMatrixValue();
 			m->print();
-			delete m;
 		}
 		else {
 			Matrix* m = layers[i]->toMatrixActivatedValue();
 			m->print();
-			delete m;
 		}
 		std::cout << "================\n";
 		if (i < layers.size() - 1) {
@@ -50,9 +48,11 @@ void NeuralNetwork::print()
 void NeuralNetwork::feedForward()
 {
 	for (int i = 0; i < layers.size() - 1; i++) {
-		auto m1 = layers[i]->toMatrixValue();
+		Matrix* m1;
 		if (i > 0)
 			m1 = layers[i]->toMatrixActivatedValue();
+		else
+			m1 = layers[i]->toMatrixValue();
 
 		auto m2 = weightMatrices[i];
 		auto m3 = *m1 * *m2;
@@ -91,20 +91,21 @@ void NeuralNetwork::backPropagation()
 	for (int i = 0; i < errors.size(); i++)
 		gradientsYtoZ.setValue(0, i, derivedValuesYtoZ.getValue(0, i)*errors[i]);
 
-	unsigned lastHiddenLayerIndex = layers.size() - 2;
-	Layer lastHiddenlayer = *layers[lastHiddenLayerIndex];
+	Layer lastHiddenlayer = *layers[layers.size() - 2];
+
+
 
 	//create and transpose a matrix
 	Matrix deltaOutputToHidden = gradientsYtoZ.transpose() *= *lastHiddenlayer.toMatrixActivatedValue();
 	deltaOutputToHidden = deltaOutputToHidden.transpose();
 
 
-	std::vector<Matrix> newWeights;
-	newWeights.push_back((*weightMatrices[lastHiddenLayerIndex] - deltaOutputToHidden).transpose());
+	std::vector<Matrix*> newWeights;
+	newWeights.push_back(new Matrix((*weightMatrices[layers.size() - 2] - deltaOutputToHidden).transpose()));
 	auto gradient = gradientsYtoZ;
 
-	std::cout << "Output to Hiden New Weights\n";
-	newWeights.back().print();
+	//std::cout << "Output to Hiden New Weights\n";
+	//newWeights.back()->print();
 
 	//-----------------------------------------//
 	//-----------------------------------------//
@@ -123,15 +124,29 @@ void NeuralNetwork::backPropagation()
 		for (int j = 0; j < weightMatrices[i]->getRowsorColumns(0); j++) {
 			float sum = 0;
 			for (int k = 0; k < weightMatrices[i]->getRowsorColumns(1); k++) {
-				auto p = gradient.getValue(j, k) * weightMatrices[i]->getValue(j, k);
+				auto p = gradient.getValue(0, k) * weightMatrices[i]->getValue(j, k);
 				sum += p;
 			}
 			derivedGradients.setValue(0, j, sum*layers[i]->toMatrixActivatedValue()->getValue(0, j));
 		}
 		auto leftNeurons = (i - 1) ? *layers[0]->toMatrixValue() : *layers[i - 1]->toMatrixActivatedValue();
 
-		newWeights.push_back(*weightMatrices[i - 1] - *(derivedGradients.transpose()*leftNeurons));
-		
 		gradient = derivedGradients;
+
+		//(new Matrix(*weightMatrices[i - 1] - (derivedGradients.transpose()*leftNeurons)->transpose()))
+		//(new Matrix(*weightMatrices[i - 1] - (derivedGradients.transpose()*leftNeurons)->transpose()))
+		auto s = Matrix(*weightMatrices[i - 1] - (derivedGradients.transpose()*leftNeurons)->transpose());
+		newWeights.push_back(new Matrix(s.transpose()));
 	}
+
+
+
+	//std::reverse(newWeights.begin(), newWeights.end());
+	weightMatrices = newWeights;
+
+
+
+
+
+
 }

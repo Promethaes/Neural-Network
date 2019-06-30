@@ -1,6 +1,8 @@
 #include "Neuron.h"
 #include "Matrix.h"
 #include "NeuralNetwork.h"
+
+bool check(std::vector<Layer*>& l1, std::vector<Layer*>&l2);
 int main() {
 	//Neuron* n = new Neuron(1.5f);
 	//
@@ -30,17 +32,40 @@ int main() {
 	NeuralNetwork network = NeuralNetwork(topology);
 	network.setCurrentInput(input);
 	network.setCurrentTarget(input);
-	network.feedForward();
-	network.setErrors();
 
-	network.print();
+	//training proccess
+	for (int i = 0; i < 20; i++) {
+		std::cout << "Training Counter: " << i << "\n";
+		network.feedForward();
+		network.setErrors();
+	//	network.print();
+		std::cout << "\n\nTotal Error: " << network.getTotalError() << "\n";
+		network.backPropagation();
+	}
 
-	std::cout << "\n\nTotal Error: " << network.getTotalError() << "\n";
 
-	network.backPropagation();
+
+
+
+
+
+
+
+
 
 
 
 	system("pause");
 	return 0;
+}
+
+bool check(std::vector<Layer*>& l1, std::vector<Layer*>& l2)
+{
+	//for (int i = 0; i < l1.size(); i++) {
+	//	for (int j = 0; j < l2.size(); j++) {
+	//		if(l1[i]->getNeurons()[0])
+	//	}
+	//}
+	//
+	return false;
 }

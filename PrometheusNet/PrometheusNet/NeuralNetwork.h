@@ -13,6 +13,7 @@ public:
 	void setErrors();
 	void backPropagation();
 
+	std::vector<Layer*> getLayers() const { return layers; }
 	float getTotalError() const { return error; }
 private:
 	std::vector<int> topology;

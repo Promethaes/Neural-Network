@@ -55,8 +55,13 @@ void Matrix::setValue(unsigned row, unsigned columnm, float v)
 
 Matrix * Matrix::operator*(const Matrix & otherM)
 {
-	if (columns != otherM.rows)
-		exit(0);
+	if (columns != otherM.rows) {
+		std::cout << "Error with * operator " <<
+			rows << " " << columns << "\nOtherM " << otherM.rows << " " << otherM.columns << "\n\n";
+		std::vector<int> s;
+		s[1];
+		system("pause");
+	}
 
 	Matrix* tempMatrix = new Matrix(this->rows, otherM.columns, false);
 
@@ -78,7 +83,11 @@ Matrix Matrix::operator-(const Matrix & otherM)
 {
 	if (rows != otherM.rows || columns != otherM.columns) {
 		system("cls");
-		std::cout << rows << " " << columns << "\nOtherM " << otherM.rows << " " << otherM.columns << "\n\n";
+		std::cout << "Error with - operator " << 
+			rows << " " << columns << "\nOtherM " << otherM.rows << " " << otherM.columns << "\n\n";
+		std::vector<int> s;
+		s[1];
+		system("pause");
 	}
 
 	Matrix tempMatrix(rows, columns, false);
