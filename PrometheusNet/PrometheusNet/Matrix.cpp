@@ -25,7 +25,6 @@ Matrix  Matrix::transpose()
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < columns; j++)
 			m.setValue(j, i, getValue(i, j));
-		std::cout << "\n";
 	}
 
 	return m;
@@ -103,8 +102,13 @@ Matrix Matrix::operator-(const Matrix & otherM)
 
 Matrix Matrix::operator*=(const Matrix & otherM)
 {
-	if (columns != otherM.rows)
-		exit(0);
+	if (columns != otherM.rows) {
+		std::cout << "Error with * operator " <<
+			rows << " " << columns << "\nOtherM " << otherM.rows << " " << otherM.columns << "\n\n";
+		std::vector<int> s;
+		s[1];
+		system("pause");
+	}
 
 	Matrix tempMatrix = Matrix(this->rows, otherM.columns, false);
 

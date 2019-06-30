@@ -33,14 +33,19 @@ int main() {
 	network.setCurrentInput(input);
 	network.setCurrentTarget(input);
 
+	float lastError = 0;
 	//training proccess
-	for (int i = 0; i < 20; i++) {
+	for (int i = 0; i < 1000000; i++) {
 		std::cout << "Training Counter: " << i << "\n";
 		network.feedForward();
+
 		network.setErrors();
-	//	network.print();
-		std::cout << "\n\nTotal Error: " << network.getTotalError() << "\n";
+		if (i > 0 && network.getTotalError() - lastError < 0)
+			std::cout << "???\n";
+		//	network.print();
+		std::cout << "Total Error: " << network.getTotalError() << "\n";
 		network.backPropagation();
+		lastError = network.getTotalError();
 	}
 
 

@@ -6,7 +6,7 @@ class NeuralNetwork {
 public:
 	NeuralNetwork(const std::vector<int>& TOPOLOGY);
 	void setCurrentInput(const std::vector<float>& input);
-	void setCurrentTarget(const std::vector<float>& TARGET) { target = TARGET; }
+	void setCurrentTarget(const std::vector<float>& TARGET) { target = TARGET; for (int i = 0; i < target.size(); i++)errors.push_back(0); }
 	void setNeuronValue(int indexLayer, int indexNeutron, float v);
 	void print();
 	void feedForward();

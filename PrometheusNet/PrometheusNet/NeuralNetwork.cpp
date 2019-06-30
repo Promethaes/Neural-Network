@@ -3,10 +3,9 @@
 NeuralNetwork::NeuralNetwork(const std::vector<int>& TOPOLOGY)
 {
 	topology = TOPOLOGY;
-	for (int i = 0; i < TOPOLOGY.size(); i++) {
+	for (int i = 0; i < TOPOLOGY.size(); i++) 
 		layers.push_back(new Layer(TOPOLOGY[i]));
-		errors.push_back(0);
-	}
+	
 
 	for (int i = 0; i < TOPOLOGY.size() - 1; i++)
 		weightMatrices.push_back(new Matrix(TOPOLOGY[i], TOPOLOGY[i + 1], yes));
